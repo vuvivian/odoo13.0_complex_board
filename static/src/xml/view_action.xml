@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     * Description：view action
+     * information.
+     * Date: 2019.11.07
+     * Updater: wangjuan04@inspur.com
+  -->
+  <template >
+       <t t-name="ComplexBoard.action">
+            <div t-att-data-id="action.attrs.id" class="oe_action">
+                <h2 t-attf-class="oe_header #{action.attrs.string ? '' : 'oe_header_empty'}">
+                    <span class="oe_header_txt"> <t t-esc="action.attrs.string"/> </span>
+                    <!-- <input class = "oe_header_text" type="text"/> -->
+                    <t t-if="!action.attrs.string">&amp;nbsp;</t>
+                    <span class='oe_icon oe_close'></span>
+                    <span class='oe_icon oe_fullScreenTest'>测试</span>
+                    <span class='oe_icon oe_fullScreen'></span>
+                    <!-- <span class='oe_icon oe_exitFullScreen'></span> -->
+                    <span class='oe_icon oe_minimize oe_fold' t-if="!action.attrs.fold"></span>
+                    <span class='oe_icon oe_maximize oe_fold' t-if="action.attrs.fold"></span>
+                </h2>
+                <div t-att-class="'oe_complex_content' + (!action.attrs.fold ? ' oe_folded' : '')"/>
+            </div>
+        </t>
+  </template>

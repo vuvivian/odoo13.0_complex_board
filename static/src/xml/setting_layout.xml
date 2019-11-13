@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     * Description：setting layout
+     * information.
+     * Date: 2019.11.07
+     * Updater: wangjuan04@inspur.com
+  -->
+  <template >
+        <t t-name="ComplexBoard.layouts">
+            <div class="oe_complexboard_layout_selector">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4"  >
+                        <div class="thumbnail">
+                            <p>
+                                <input name="Layout_icon" type="radio" value="1" />
+                                <span class="o_layout_text">应用以图标展示</span>
+                            </p>
+                            <img src="/board/static/src/img/layout_1-1-1.png" alt="..." />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <p>
+                                <input name="Layout_detail" type="radio" value="2" />
+                                <span class="o_layout_text">显示应用的详情页展示</span>
+                            </p>
+                            <img src="/board/static/src/img/layout_1-1-1.png" alt="..." />
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </t>
+  </template>

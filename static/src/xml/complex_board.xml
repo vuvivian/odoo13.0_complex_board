@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+     * Description：main Qweb
+     * information.
+     * Date: 2019.11.07
+     * Updater: wangjuan04@inspur.com
+  -->
+<template>
+     <t t-name="Complex.NoContent">
+        <p> hello, 这里一无所有😯😯😯 </p>
+        <t t-call="ComplexBoard.BottomBar"/>
+     </t>
+
+    <t t-name="ComplexBoard.BottomBar">
+         <div class="o_complex_bar">
+            <span class="o_complex_bar_icon o_complex_bar_setting">
+                 <img src="/complex_board/static/src/img/setting.png" width="30" height="30" alt="setting"/>
+            </span>
+            <span class="o_complex_bar_icon o_complex_bar_menu">
+                 <img src="/complex_board/static/src/img/menu.png" width="36" height="36" alt="menu"/>
+            </span>
+            <span class="o_complex_bar_icon">
+                |
+            </span>
+             <span class="o_complex_bar_icon">
+             product
+            </span>
+            <span class="o_complex_bar_icon">
+                account
+            </span>
+        </div>
+    </t>
+
+     <t t-name="Complex.xml">
+        <form t-att-string="form_title">
+            <complex t-att-style="style">
+                <column t-foreach="columns" t-as="column">
+                    <action t-foreach="column" t-as="action" t-att="action"/>
+                </column>
+            </complex>
+        </form>
+    </t>
+
+    <t t-name="Complex">
+        <table t-att-data-layout="node.attrs.layout" t-attf-class="oe_complexboard oe_complexboard_layout_#{node.attrs.layout}" cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <td t-foreach="node.children" t-as="column" t-if="column.tag == 'column'"
+                    t-att-id="'column_' + column_index" t-attf-class="oe_complexboard_column index_#{column_index}">
+                    <t t-foreach="column.children" t-as="action" t-if="action.tag == 'action'" t-call="ComplexBoard.action"/>
+                </td>
+            </tr>
+        </table>
+         <t t-call="ComplexBoard.BottomBar"/>
+    </t>
+
+    <div t-name="AddToComplexMenu">
+        <button type="button" class="dropdown-item o_add_to_complex o_menu_header">添加到首页</button>
+        <div t-if="widget.isOpen" class="dropdown-item-text ">
+            <input class="o_input o_add_to_complex_input" type="text"/>
+        </div>
+        <div t-if="widget.isOpen"  class="dropdown-item-text ">
+            <button type="button" class="btn btn-primary o_add_to_complex_confirm_button">保存</button>
+        </div>
+    </div>
+
+
+</template>

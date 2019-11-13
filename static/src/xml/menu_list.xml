@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     * Description：menu list
+     * information.
+     * Date: 2019.11.07
+     * Updater: wangjuan04@inspur.com
+  -->
+  <template >
+         <t t-name="ComplexBoard.menus">
+            <div class='row'>
+            <div class='o_complex_menu o_complex_firMenu'>
+               <ul class="list-group">
+                    <li class="list-group-item">财务会计</li>
+                    <li class="list-group-item">成本管理</li>
+                    <li class="list-group-item">资产管理</li>
+                    <li class="list-group-item">管理会计</li>
+                    <li class="list-group-item">供应链</li>
+                </ul>
+            </div>
+            <div class='o_complex_menu o_complex_secMenu'>
+                <ul class="list-group">
+                    <li class="list-group-item">采购管理</li>
+                    <li class="list-group-item">销售管理</li>
+                    <li class="list-group-item">信用管理</li>
+                    <li class="list-group-item">库存管理</li>
+                    <li class="list-group-item">组织间结算</li>
+                </ul>
+            </div>
+            <div class='o_complex_detail'>
+                <div class="row">
+                     <div class="col-4">
+                        <h3>报价</h3>
+                        <hr/>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <img src="/complex_board/static/src/img/收藏.png"  alt=""/>
+                                销售报价单
+                            </li>
+                            <li class="list-group-item">
+                                 <img src="/complex_board/static/src/img/收藏-1.png"  alt=""/>
+                                销售报价变更单
+                            </li>
+                        </ul>
+                    </div>
+                     <div class="col-4">
+                        <h3>合同管理</h3>
+                        <hr/>
+                         <ul class="list-group">
+                            <li class="list-group-item">
+                                <img src="/complex_board/static/src/img/收藏.png"  alt=""/>
+                               销售合同
+                            </li>
+                            <li class="list-group-item">
+                                 <img src="/complex_board/static/src/img/收藏-1.png"  alt=""/>
+                                销售合同执行明细表
+                            </li>
+                             <li class="list-group-item">
+                                <img src="/complex_board/static/src/img/收藏.png"  alt=""/>
+                               销售合同执行汇总表
+                            </li>
+                             <li class="list-group-item">
+                                <img src="/complex_board/static/src/img/收藏.png"  alt=""/>
+                               销售合同变更单
+                            </li>
+                        </ul>
+                    </div>
+                     <div class="col-4">
+                        <h3>订单处理</h3>
+                        <hr/>
+                         <ul class="list-group">
+                            <li class="list-group-item">
+                                <img src="/complex_board/static/src/img/收藏.png"  alt=""/>
+                               销售订单
+                            </li>
+                            <li class="list-group-item">
+                                 <img src="/complex_board/static/src/img/收藏-1.png"  alt=""/>
+                                销售订单变更单
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class='row'>
+                     <div class="col-4">
+                        <h3>出货处理</h3>
+                        <hr/>
+                         <ul class="list-group">
+                            <li class="list-group-item">
+                                <img src="/complex_board/static/src/img/收藏.png"  alt=""/>
+                               发货通知单
+                            </li>
+                            <li class="list-group-item">
+                                 <img src="/complex_board/static/src/img/收藏-1.png"  alt=""/>
+                                销售出库单
+                            </li>
+                             <li class="list-group-item">
+                                 <img src="/complex_board/static/src/img/收藏-1.png"  alt=""/>
+                                电子面单
+                            </li>
+                            <li class="list-group-item">
+                                 <img src="/complex_board/static/src/img/收藏-1.png"  alt=""/>
+                                预计可发量查询
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+  </template>
