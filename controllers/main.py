@@ -11,7 +11,7 @@ class Complex(Controller):
     @route('/complex/add_to_complexboard', type='json', auth='user')
     def add_to_complexboard(self, action_id, context_to_save, domain, view_mode, name=''):
         # Retrieve the 'My Dashboard' action from its xmlid
-        action = request.env.ref('complex_board.open_complex_view_board')
+        action = request.env.ref('odoo_complex_board.open_complex_view_board')
 
         if action and action['res_model'] == 'complex.view' and action['views'][0][1] == 'form' and action_id:
             # Maybe should check the content instead of model board.board ?

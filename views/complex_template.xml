@@ -2,11 +2,11 @@
 <odoo>
     <template id="assets_backend" name="complex assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <link rel="stylesheet" type="text/scss" href="/complex_board/static/src/scss/complex.scss"/>
-            <script type="text/javascript" src="/complex_board/static/src/js/action_manager_board_action.js"></script>
-            <script type="text/javascript" src="/complex_board/static/src/js/complex_view.js"></script>
-            <script type="text/javascript" src="/complex_board/static/src/js/add_to_complex_menu.js"></script>
-            <script type="text/javascript" src="/complex_board/static/src/js/full_screen_action.js"></script>
+            <link rel="stylesheet" type="text/scss" href="/odoo_complex_board/static/src/scss/complex_board.scss"/>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/board_action_manager.js"></script>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/complex.board.js"></script>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/add_to_complex_menu.js"></script>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/full_screen_action.js"></script>
         </xpath>
     </template>
 </odoo>
