@@ -78,7 +78,6 @@ odoo.define('complex.AddToComplexMenu', function(require, factory) {
 
             // 查找最近的祖先匹配谓词
             var actionManager = this.findAncestor(function (ancestor) {
-                console.log('1?2', ancestor instanceof ActionManager)
                 return ancestor instanceof ActionManager;
             });
 

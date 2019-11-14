@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': '首页驾驶舱',
+    'name': '驾驶舱首页',
     'category': 'tools',
     'summary': ' 一种支持多视图展示的容器视图组件实现方法',
     'description': """ 一种支持多视图展示的容器视图组件实现方法""",

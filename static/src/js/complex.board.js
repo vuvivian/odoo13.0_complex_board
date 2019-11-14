@@ -267,13 +267,18 @@ odoo.define('complex.ComplexView', function (require) {
                 });
         },
 
-        ////wangjuan设置布局
+        //设置
         _onBarSettingClick: function () {
             this.trigger_up('change_layout');
         },
-        ////wangjuan菜单显示
-        _onBarMenuClick: function () {
-            this.trigger_up('choose_menu');
+        //菜单
+        _onBarMenuClick: function (event) {
+            // this.trigger_up('choose_menu');
+            this.do_action({
+                type: 'ir.actions.client',
+                tag: 'ComplexMenusPage',
+                target: 'current'
+            })
         },
 
         getBoard: function () {
@@ -363,7 +368,6 @@ odoo.define('complex.ComplexView', function (require) {
             }
 
         },
-
 
         _onFullScreenTest: function (event) {
             var $container = $(event.currentTarget).parents('.oe_action:first');

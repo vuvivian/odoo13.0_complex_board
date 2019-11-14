@@ -7,6 +7,8 @@
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/complex.board.js"></script>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/add_to_complex_menu.js"></script>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/full_screen_action.js"></script>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/menu_list_action.js"></script>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/menu_list_action.js"></script>
         </xpath>
     </template>
 </odoo>

@@ -13,7 +13,7 @@
                     <!-- <input class = "oe_header_text" type="text"/> -->
                     <t t-if="!action.attrs.string">&amp;nbsp;</t>
                     <span class='oe_icon oe_close'></span>
-                    <span class='oe_icon oe_fullScreenTest'>测试</span>
+                    <span class='oe_icon oe_fullScreenTest'>放大</span>
                     <span class='oe_icon oe_fullScreen'></span>
                     <!-- <span class='oe_icon oe_exitFullScreen'></span> -->
                     <span class='oe_icon oe_minimize oe_fold' t-if="!action.attrs.fold"></span>

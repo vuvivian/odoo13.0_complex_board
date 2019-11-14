@@ -9,7 +9,7 @@
      <t t-name="FullScreen">
          <div class='o_fullscreen_container'>
              <div>
-                 <button name="退出全屏"  string="退出全屏" class="btn-primary" />
+                 <!-- <button name="退出全屏"  string="退出全屏" class="btn-primary oe_exit_full_screen" >退出全屏</button> -->
              </div>
         </div>
     </t>

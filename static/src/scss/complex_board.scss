@@ -116,6 +116,11 @@
         background: none;
     }
 }
+
+.oe_module_list {
+    min-height: 100%;
+    padding: 2rem 4rem;
+}
 .o_complex_firMenu {
     background-color: silver;
     .list-group-item {
