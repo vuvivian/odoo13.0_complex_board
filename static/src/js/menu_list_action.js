@@ -1,5 +1,5 @@
  /**
-     * Description：menu actions
+     * Description：功能菜单Action
      * information.
      * Date: 2019.11.12
      * Updater: wangjuan04@inspur.com
@@ -19,27 +19,16 @@ odoo.define('complex_board.menuList', function (require) {
         init: function(parent, action){
             this._super.apply(this, arguments);
             this.name = "功能导航";
-            this.menuList = [];
-            this.thirdMenu = [];
+            this.menuList = [];  // 一二级菜单数据
+            this.thirdMenu = []; // 三四级菜单数据
         },
-        // start: function () {
-        //     this._super.apply(this, arguments);
-        //     this._rpc({
-        //         model: 'ir.ui.menu',
-        //         method: 'load_upper_menus',
-        //         args: [config.debug],
-        //         context: session.user_context,
-        //     }).then(function(result) {
-        //         console.log('result', result);
-        //         this.menuList = result.children;
-        //     });
-        // },
         willStart: function(){
             var self = this;
             return this._super.apply(this,arguments).then(function(){
                 return self.load();
             })
         },
+        // 初始化菜单数据
         load: function () {
             var self = this;
             return this._rpc({
@@ -54,20 +43,15 @@ odoo.define('complex_board.menuList', function (require) {
         events: {
             'click .oe_second_menu_item': "_onMenuclik",
         },
-
+        // 二级菜单点击事件
         _onMenuclik: function(ev){
             const itemId = ev.currentTarget.attributes['itemId'].nodeValue;
-            console.log(this.$el);
-            // $(".oe_menu_detail").append($el);
-            // this.$el.addClass('active');
-            //  this.$buttons = $(QWeb.render("ImportView.buttons", this));
             return this._rpc({
                 model: 'ir.ui.menu',
                 method: 'load_module_menus',
                 args: [itemId,config.debug],
                 context: session.user_context,
             }).then(function(result) {
-                console.log('result', result);
                 self.menuDetail= result.children;
                 var $el = QWeb.render('Complex.menuDetails', {
                     widget: this,
@@ -75,14 +59,8 @@ odoo.define('complex_board.menuList', function (require) {
                 });
                 $(".oe_menu_detail_row").replaceWith($el);
             });
-           
-        },
-        renderElement: function(ev){
-            this._super.apply(this,arguments);
-            console.log('renderElement')
         }
     })
-   
     core.action_registry.add('ComplexMenusPage', ComplexMenusPage);
     return ComplexMenusPage
 })

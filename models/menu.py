@@ -10,7 +10,7 @@ class Menu(models.Model):
     collect_user_ids = fields.Many2many('res.users','menu_user_rel','menu_id','user_id',string='collect users')
  
     @api.model
-    @tools.ormcache_context('self._uid', 'debug', keys=('lang',))
+    #@tools.ormcache_context('self._uid', 'debug', keys=('lang',))
     def load_upper_menus(self,debug):
         """ Loads the 1th, 2th order menu.
         :return: the 1th and 2th order menu
@@ -33,16 +33,16 @@ class Menu(models.Model):
         }
 
     @api.model
-    # @tools.ormcache_context('self._uid', 'debug', keys=('lang',))
+    #@tools.ormcache_context('self._uid', 'debug', keys=('lang',))
     def load_module_menus(self,menu_id,debug):
         """ Loads the 3th, 4th order menu of the given module.
         :return: the submenu of the given module
         :rtype: dict('children': menu_nodes)
         """
-        fields = ["name", "sequence", "parent_id", "action", "web_icon"]
+        fields = ["name", "sequence", "parent_id", "action", "web_icon","collect_user_ids"]
         root_menu = self.search([('id','=',menu_id)]).read(fields)
         menus = self.search([("id", "child_of", [int(menu_id)])])
-        menu_items = menus.read(fields) #if menus else []
+        menu_items = menus.read(fields) if menus else []
 
         menu_items.extend(root_menu)
         
@@ -57,6 +57,21 @@ class Menu(models.Model):
         for menu_item in menu_items:
             menu_item.setdefault("children", []).sort(key=operator.itemgetter("sequence"))
         
+        #judge the menus is collected or not
+        # for menu_item in menu_items:
+        #     if self.env.uid in menu_item["collect_user_ids"].ids:
+        #         menu_item.setdefault("is_collected", True)
+        #     else:
+        #         menu_item.setdefault("is_collected", False) 
+        count = 0
+        for menu_item in menu_items:
+            if count % 2 == 0:
+                menu_item.setdefault("is_collected", True)
+            else:
+                menu_item.setdefault("is_collected", False)
+            count += 1
+
+        
         return {
             "id": root_menu[0]["id"],
             "name": root_menu[0]["name"],
@@ -65,7 +80,7 @@ class Menu(models.Model):
         }
 
     @api.model
-    @tools.ormcache_context('self._uid', 'debug', keys=('lang',))
+    #@tools.ormcache_context('self._uid', 'debug', keys=('lang',))
     def load_favourite_menu(self):
         """ Loads the collected menus by the given user.
         :return: menus
