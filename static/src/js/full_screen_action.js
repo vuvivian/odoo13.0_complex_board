@@ -18,7 +18,7 @@ odoo.define('complex_board.fullScreen', function (require) {
             this.name="fulltest";
         },
 
-        events: {        },
+        events: {},
     })
    
     core.action_registry.add('fullScreenPage', fullScreenPage);

@@ -3,6 +3,7 @@
     <template id="assets_backend" name="complex assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <link rel="stylesheet" type="text/scss" href="/odoo_complex_board/static/src/scss/complex_board.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/odoo_complex_board/static/src/scss/complex_menu.scss"/>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/board_action_manager.js"></script>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/complex.board.js"></script>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/add_to_complex_menu.js"></script>

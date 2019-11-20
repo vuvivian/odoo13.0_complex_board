@@ -115,7 +115,6 @@ odoo.define('complex.ComplexView', function (require) {
                 console.log('del', barStore.inState)
                 barStore.inState.splice($.inArray(ev.data.app,barStore.inState),1);
             }
-            console.log(barStore);
         //    return QWeb.render('ComplexBoard.BottomBar', {node: barStore})
         }
     })
@@ -155,7 +154,7 @@ odoo.define('complex.ComplexView', function (require) {
                 }
             });
         },
-        //wangjuan渲染页面
+        //渲染
         _renderTagComplex: function (node) {
             var self = this;
             this.$el.addClass('o_complexboard');
@@ -163,7 +162,6 @@ odoo.define('complex.ComplexView', function (require) {
 
             var hasAction = _.detect(node.children, function (column) {
                 return _.detect(column.children,function (element){
-                    console.log('ele', element);
                     return element.tag === "action"? element: false;
                 });
             });
