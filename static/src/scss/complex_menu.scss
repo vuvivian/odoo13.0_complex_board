@@ -1,11 +1,12 @@
 .oe_menu_topBar {
-    height:70px;
+    height:50px;
     background:rgba(255,255,255,1);
-    padding: 15px 10px;
-    line-height: 40px;
+    padding: 10px 10px;
+    line-height: 30px;
+    margin: 0px;
     .oe_menu_topBar_title {
-        font-size:26px;
-        font-family:Alibaba PuHuiTi;
+        font-size:20px;
+        font-family:Alibaba PuHuiTi,"Odoo Unicode Support Noto", "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
         font-weight:500;
         color:rgba(29,32,54,1);
     }
@@ -13,44 +14,84 @@
         text-align: right;
     }
 }
-
-.oe_menu_list {
-    height:953px;
-    background:rgba(66,72,120,1);
-    border-radius: 0.2rem;
-    padding: 20px;
-    .oe_first_menu_item {
-        font-size:16px;
-        font-family:Alibaba PuHuiTi;
-        font-weight:400;
-        color:rgba(255,255,255,1);
-        .oe_first_menu_item_toggle {
-            float: right;
-        }
-        .oe_second_menu {
-            padding: 2px 25px;
-            .oe_second_menu_item {
-                font-size:15px;
-                font-family:Alibaba PuHuiTi;
-                font-weight:400;
-                color:rgba(255,255,255,1);
-                padding:5px;
-                &:hover{
+.oe_menu_container {
+    margin: 0;
+    .oe_menu_list {
+        // height:953px;
+        min-height: calc(100vh - 96px);
+        background:rgba(66,72,120,1);
+        border-radius: 0.2rem;
+        padding-right: 0px;
+        .oe_first_menu_item {
+            font-size:16px;
+            font-family:Alibaba PuHuiTi,"Odoo Unicode Support Noto", "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
+            font-weight:400;
+            color:rgba(255,255,255,1);
+            .oe_first_menu_item_container {
+                padding: 10px;
+                .oe_first_menu_item_icon {
+                    margin-top: -3px;
+                }
+                .oe_first_menu_item_name {
+                    margin-left: 5px;
+                }
+                .oe_first_menu_item_toggle {
+                    float: right;
+                }
+            }
+            .oe_second_menu {
+                background-color: #303662;
+                .active{
                     background:rgba(255,129,86,1);
                 }
-                .active {
-                    background:rgba(255,129,86,1);
+                .oe_second_menu_item {
+                    height: 40px;
+                    font-size:15px;
+                    font-family:inherit;
+                    font-weight:400;
+                    color:rgba(255,255,255,1);
+                    &:hover{
+                        background:#424878;
+                    }
+                    .oe_second_menu_item_container {
+                        padding: 5px 0px;
+                        .oe_second_menu_item_name {
+                            padding-left: 55px;
+                        }
+                    }
                 }
-
             }
         }
     }
-}
-.oe_menu_detail {
-    padding: 10px;
-    .oe_menu_detail_row {
-        background-color: #fff;
-        margin: 0px;
-        padding: 10px;
+    .oe_menu_detail {
+        padding: 20px;
+        .oe_menu_detail_row {
+            min-height: calc(100vh - 140px);
+            background-color: #fff;
+            margin: 0px;
+            padding: 20px;
+            font-family:Alibaba PuHuiTi,"Odoo Unicode Support Noto", "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
+            .oe_third_menu_item {
+                margin-bottom: 15px;
+            }
+            .oe_menu_detail_title {
+                margin-bottom: 8px;
+                font-size:18px;
+                font-weight:700;
+                font-family: inherit;
+                color:rgba(29,32,54,1);
+            }
+            .oe_fourth_menu_item {
+                padding: 6px 0px;
+                border: none;
+            }
+            .oe_menu_detail_menu {
+                margin-left: 12px;
+                font-size:15px;
+                font-weight:400;
+                font-family: inherit;
+                color:rgba(66,72,120,1);
+            }
+        }
     }
 }
