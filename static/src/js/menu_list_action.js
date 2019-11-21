@@ -29,7 +29,7 @@ odoo.define('complex_board.menuList', function (require) {
                 return self.load();
             })
         },
-        // 初始化菜单数据
+        // info:init menu data author：wang juan date：2019/11/20
         load: function () {
             var self = this;
             return this._rpc({
@@ -44,7 +44,8 @@ odoo.define('complex_board.menuList', function (require) {
         events: {
             'click .oe_second_menu_item': "_onMenuClik",
             'click .oe_first_menu_item_toggle': "_onIconClick",
-            'click .oe_fourth_menu_item_icon': "_onCollectClick"
+            'click .oe_fourth_menu_item_icon': "_onCollectClick",
+            'click .oe_menu_detail_menu': "_onDetailClick"
         },
         // 二级菜单点击事件
         _onMenuClik: function(ev){
@@ -82,7 +83,20 @@ odoo.define('complex_board.menuList', function (require) {
                 ev.currentTarget.attributes['status'].nodeValue = "true"
                 $("."+ "oe_fourth_menu_item_icon"+collectId).html(' <img src="/odoo_complex_board/static/src/img/star.png"  alt="收藏" />')
             }
+        },
+         // info:detail menu click event  author：wang juan  date：2019/11/21
+         _onDetailClick: function(ev){
+            console.log('ev',ev);
+            const detailId = ev.currentTarget.attributes['id'].nodeValue;
+            const detailAction = ev.currentTarget.attributes['action'].nodeValue.split(",")[1];
+            if (detailAction) {
+                this.trigger_up('menu_clicked',{
+                    id: detailId,
+                    action_id: detailAction,
+                });
+            }
         }
+
     })
     core.action_registry.add('ComplexMenusPage', ComplexMenusPage);
     return ComplexMenusPage

@@ -22,7 +22,7 @@
                                             <img t-if="fourthMenu['is_collected']" src="/odoo_complex_board/static/src/img/star.png"  alt="收藏" />
                                             <img t-else="fourthMenu['is_collected']" src="/odoo_complex_board/static/src/img/cancleStar.png"  alt="取消收藏"/>
                                         </span>
-                                        <span class="oe_menu_detail_menu">
+                                        <span class="oe_menu_detail_menu" t-attr-id="{{fourthMenu['id']}}" t-attr-action="{{fourthMenu['action']}}">
                                             <t t-esc="fourthMenu['name']"/> 
                                         </span>
                                     </li>

@@ -91,6 +91,9 @@
                 font-weight:400;
                 font-family: inherit;
                 color:rgba(66,72,120,1);
+                &:hover {
+                    background: #bab9de
+                }
             }
         }
     }
