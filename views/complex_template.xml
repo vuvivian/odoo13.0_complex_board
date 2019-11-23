@@ -4,8 +4,10 @@
         <xpath expr="." position="inside">
             <link rel="stylesheet" type="text/scss" href="/odoo_complex_board/static/src/scss/complex_board.scss"/>
             <link rel="stylesheet" type="text/scss" href="/odoo_complex_board/static/src/scss/complex_menu.scss"/>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/complex_board_controller.js"></script>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/complex_board_renderer.js"></script>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/board_action_manager.js"></script>
-            <script type="text/javascript" src="/odoo_complex_board/static/src/js/complex.board.js"></script>
+            <script type="text/javascript" src="/odoo_complex_board/static/src/js/complex_board_view.js"></script>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/add_to_complex_menu.js"></script>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/full_screen_action.js"></script>
             <script type="text/javascript" src="/odoo_complex_board/static/src/js/menu_list_action.js"></script>

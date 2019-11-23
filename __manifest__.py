@@ -21,6 +21,7 @@
         'static/src/xml/setting_layout.xml',
         'static/src/xml/view_action.xml',
         'static/src/xml/enlarge_view.xml',
+        'static/src/xml/bottom_bar.xml',
     ],
     'installable': True,
     'application': True,

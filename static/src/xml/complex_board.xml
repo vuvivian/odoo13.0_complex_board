@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
      * Description：main Qweb
-     * information.
      * Date: 2019.11.07
      * Updater: wangjuan04@inspur.com
   -->
@@ -10,27 +9,7 @@
         <p> hello, 这里一无所有😯😯😯 </p>
         <t t-call="ComplexBoard.BottomBar"/>
      </t>
-
-    <t t-name="ComplexBoard.BottomBar">
-         <div class="o_complex_bar">
-            <span class="o_complex_bar_icon o_complex_bar_setting">
-                 <img src="/complex_board/static/src/img/setting.png" width="30" height="30" alt="setting"/>
-            </span>
-            <span class="o_complex_bar_icon o_complex_bar_menu">
-                 <img src="/complex_board/static/src/img/menu.png" width="36" height="36" alt="menu"/>
-            </span>
-            <span class="o_complex_bar_icon">
-                |
-            </span>
-             <span class="o_complex_bar_icon">
-             product
-            </span>
-            <span class="o_complex_bar_icon">
-                account
-            </span>
-        </div>
-    </t>
-
+     
      <t t-name="Complex.xml">
         <form t-att-string="form_title">
             <complex t-att-style="style">
