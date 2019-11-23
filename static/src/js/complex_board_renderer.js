@@ -184,11 +184,13 @@ odoo.define('complex.ComplexRenderer', function (require) {
 
         // 最小化视图
         _onFoldClick: function (event) {
+            var self = this;
+            console.log('this', self)
             var $e = $(event.currentTarget);
+            console.log('$e', $e)
             var $action = $e.closest('.oe_action');
             var id = $action.data('id');
             var actionAttrs = this.actionsDescr[id];
-
             if ($e.is('.oe_minimize')) {
                 actionAttrs.fold = '1';
             } else {
@@ -197,7 +199,12 @@ odoo.define('complex.ComplexRenderer', function (require) {
             $e.toggleClass('oe_minimize oe_maximize');
             $action.find('.oe_complex_content').toggle();
             this.trigger_up('save_dashboard');
-            // this.trigger_up('')
+            this.trigger_up('add_complex_view', {
+                'viewInfo': {
+                    'name':event.currentTarget.attributes['viewname'].nodeValue,
+                    'id': event.currentTarget.attributes['viewid'].nodeValue
+                }
+            })
         },
 
         // 关闭视图
@@ -208,6 +215,13 @@ odoo.define('complex.ComplexRenderer', function (require) {
                 confirm_callback: function () {
                     $container.remove();
                     self.trigger_up('save_dashboard');
+                    
+                    this.trigger_up('remove_complex_view', {
+                        'viewInfo': {
+                            'name':event.currentTarget.attributes['viewname'].nodeValue,
+                            'id': event.currentTarget.attributes['viewid'].nodeValue
+                        }
+                    })
                 },
             });
         },
