@@ -7,18 +7,26 @@
   -->
   <template >
        <t t-name="ComplexBoard.action">
-            <t t-log="action"></t>
-            <div t-att-data-id="action.attrs.id" class="oe_action">
+            <div t-att-data-id="action.attrs.id" class="oe_action" t-attr-id="{{action.attrs.id}}">
+                <!-- <t t-log="action"></t> -->
                 <h2 t-attf-class="oe_header #{action.attrs.string ? '' : 'oe_header_empty'}">
-                    <span class="oe_header_txt" t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}"> <t t-esc="action.attrs.string"/> </span>
+                    <span class="oe_header_txt" t-attr-viewaction="{{action.attrs['name']}}" t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}" t-attr-viewicon="{{action.attrs['web_icon']}}" t-attr-viewmenu="{{action.attrs['menu_id']}}"> 
+                        <t t-esc="action.attrs.string"/> 
+                    </span>
                     <!-- <input class = "oe_header_text" type="text"/> -->
-                    <t t-if="!action.attrs.string" t-attr-view="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}">&amp;nbsp;</t>
-                    <span class='oe_icon oe_close' t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}"></span>
-                    <span class='oe_icon oe_fullScreenTest' t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}">放大</span>
-                    <span class='oe_icon oe_fullScreen' t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}"></span>
-                    <!-- <span class='oe_icon oe_exitFullScreen'></span> -->
-                    <span class='oe_icon oe_minimize oe_fold' t-if="!action.attrs.fold" t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}"></span>
-                    <span class='oe_icon oe_maximize oe_fold' t-if="action.attrs.fold" t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}"></span>
+                     <t t-if="!action.attrs.string" t-attr-viewaction="{{action.attrs['name']}}"  t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}" t-attr-viewicon="{{action.attrs['web_icon']}}" t-attr-viewmenu="{{action.attrs['menu_id']}}">&amp;nbsp;</t>
+                    <span class='oe_icon oe_close' t-attr-viewaction="{{action.attrs['name']}}"  t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}" t-attr-viewicon="{{action.attrs['web_icon']}}" t-attr-viewmenu="{{action.attrs['menu_id']}}">
+                        <img src='/odoo_complex_board/static/src/img/close.png' style="width: 20px; height: 20px"/>
+                    </span>
+                    <span class='oe_icon oe_expand' t-attr-viewaction="{{action.attrs['name']}}" 
+                        t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}" t-attr-viewicon="{{action.attrs['web_icon']}}" t-attr-viewmenu="{{action.attrs['menu_id']}}">
+                        <img src='/odoo_complex_board/static/src/img/max.png' style="width: 18px; height: 18px"/>
+                    </span>
+                    <span class='oe_icon oe_minimize oe_fold' t-attr-viewaction="{{action.attrs['name']}}" 
+                        t-attr-viewname="{{action.attrs['string']}}" t-attr-viewid="{{action.attrs['id']}}"
+                        t-attr-viewicon="{{action.attrs['web_icon']}}" t-attr-viewmenu="{{action.attrs['menu_id']}}">
+                        <img src='/odoo_complex_board/static/src/img/min.png' style="width: 18px; height: 18px"/>
+                    </span>
                 </h2>
                 <div t-att-class="'oe_complex_content' + (!action.attrs.fold ? ' oe_folded' : '')"/>
             </div>

@@ -41,9 +41,7 @@
                 <t t-esc="widget.name"/>
             </div>
             <div class="col-6 oe_menu_topBar_close">
-                <a href='#'>
-                    <img src="/odoo_complex_board/static/src/img/guanbi.png" alt="close" width="18px" height="18px"/>
-                </a>
+                <img src="/odoo_complex_board/static/src/img/guanbi.png" alt="close" width="18px" height="18px"/>
             </div>
         </div>
         <div class='row oe_menu_container'>
@@ -70,19 +68,6 @@
                                     </div>
                                 </t>
                             </div>
-                            <!-- <ul class="nav flex-column oe_second_menu" id="oe_second_menu">
-                                <t t-foreach="widget.menuList" t-as="menuItem">
-                                    <li class="nav-item oe_second_menu_item" 
-                                        data-toggle="pill"
-                                    t-att-itemId="menuItem['id']"  t-att-action="menuItem['action']" t-att-parentId="menuItem['parent_id']" t-att-itemIcon="menuItem['web_icon']" >
-                                        <div class="oe_second_menu_item_container">
-                                            <span class="oe_second_menu_item_name">
-                                                <t t-esc="menuItem['name']" />
-                                            </span>
-                                        </div>
-                                    </li>
-                                </t>
-                            </ul> -->
                         </div>
                     </li>
                 </ul>
