@@ -9,6 +9,8 @@ odoo.define('complex.ComplexController', function (require) {
     var core = require('web.core');
     var FormController = require('web.FormController');
     var dataManager = require('web.data_manager');
+    var Dialog = require('web.Dialog');
+    var _t = core._t;
     var QWeb = core.qweb;
     var viewStore = {
         stay_view: []
@@ -21,7 +23,8 @@ odoo.define('complex.ComplexController', function (require) {
             switch_view: '_onSwitchView',
             enable_cmplexboard: '_onEnableComplexboard',
             add_complex_view: '_onAddComplexView',
-            remove_complex_view: '_onRemoveComplexView'
+            remove_complex_view: '_onRemoveComplexView',
+            change_layout:  '_onChangeLayout',
         }),
 
         init: function (parent, model, renderer,params) {
@@ -70,12 +73,27 @@ odoo.define('complex.ComplexController', function (require) {
 
         // info： add view into bottom bar  auth: wangjuan  date:2019/11/23
         _onAddComplexView: function (event) {
-            const obj = {} ;
-            viewStore.stay_view.push(event.data.viewInfo);
-            viewStore.stay_view = viewStore.stay_view.reduce(function(item, next) {
-                obj[next.id] ? '' : obj[next.id] = true && item.push(next);
-                return item;
-            }, []);
+            // const obj = {} ;
+            // viewStore.stay_view = viewStore.stay_view.reduce(function(item, next) {
+            //     obj[next.id] ? '' : obj[next.id] = true && item.push(next);
+            //     console.log('item', item)
+            //     return item;
+            // }, []);
+            if (viewStore.stay_view.length === 0) {
+                viewStore.stay_view.push(event.data.viewInfo);
+            } else {
+                let hasCommon = false;
+                viewStore.stay_view.map((item,index)=>{
+                    console.log('it',item);
+                    if (item.id === event.data.viewInfo.id){
+                        hasCommon = true;
+                        viewStore.stay_view[index] = event.data.viewInfo;
+                    }
+                })
+                if (!hasCommon) {
+                    viewStore.stay_view.push(event.data.viewInfo);
+                }
+            }
             var $el = QWeb.render('ComplexBoard.BottomBar', {
                     allView: viewStore
                 });
@@ -91,7 +109,49 @@ odoo.define('complex.ComplexController', function (require) {
                 allView: viewStore
             });
             $(".o_complex_bar").replaceWith($el);
-        }
+        },
+
+        // info： setting page layout  auth: wangjuan  date:2019/11/27
+        _onChangeLayout: function (event) {
+            // $(".o_content").replaceWith(QWeb.render('ComplexBoard.layouts'));
+            var self = this;
+            var layout = null;
+            var dialog = new Dialog(this, {
+                title: _t("选择首页展示风格"),
+                $content: QWeb.render('ComplexBoard.layouts', _.clone(event.data))
+            });
+            dialog.opened().then(function () {
+                dialog.$('.layout_01').click(function () {
+                    layout = $(this).attr('data-layout');
+                    // self.renderer.changeLayout(layout);
+                    // self._saveDashboard();
+                    // dialog.close();
+                });
+                dialog.$('.layout_02').click(function () {
+                    layout = $(this).attr('data-layout');
+                });
+                dialog.$footer.find('.btn-primary').click(function () {
+                    if (layout) {
+                        self._onConfirmDialog(layout);
+                    }
+                })
+            });
+            dialog.open();
+        },
+         
+        // info： page layout save auth: wangjuan date:2019/11/27
+        _onConfirmDialog: function (layout) {
+           var self = this;
+           self._rpc({
+                model: 'res.users',
+                method: 'set_layout',
+                args: [layout],
+            }).then(
+                console.log('success')
+            );
+        },
+       
+       
     })
 
     return ComplexController;

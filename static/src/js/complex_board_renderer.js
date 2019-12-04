@@ -17,33 +17,93 @@ odoo.define('complex.ComplexRenderer', function (require) {
     var _t = core._t;
     var QWeb = core.qweb;
     var FormRenderer = require('web.FormRenderer');
+    var layout;
 
     var ComplexRenderer = FormRenderer.extend({
         custom_events: _.extend({}, FormRenderer.prototype.custom_events, {}),
         events: _.extend({}, FormRenderer.prototype.events, {
             'click .oe_complexboard_column .oe_fold': '_onFoldClick',
             'click .oe_complexboard_column .oe_close': '_onCloseClick',
+<<<<<<< HEAD
             'click .oe_complexboard_column .oe_fullScreen': '_onFullScreen',
             'click .oe_complexboard_column .oe_exitFullScreen': '_onExitFullScreen',
             'click .oe_complexboard_column  .oe_fullScreenTest': '_onFullScreenTest',
             // 'click .o_complex_bar_icon.o_complex_bar_setting': '_onBarSettingClick', 
             // 'click .o_complex_bar_icon.o_complex_bar_menu': '_onBarMenuClick',
+=======
+            'click .oe_complexboard_column .oe_expand': '_onExpandScreen',
+            'click .o_complex_bar_setting': '_onBarSettingClick', 
+            'click .o_complex_bar_stay_icon': '_onBarIconClick',
+            'click .o_complex_bar_btn_container': '_onBarFoldBtnClick',
+            'click .o_complex_bar_icon.o_complex_bar_menu': '_onBarMenuClick',
+            'click .oe_complex_icon_item':'_onMenuClicked', //首页图标点击
+>>>>>>> 3bfec937f74db0045e49acb3abfa35b98c4627f8
         }),
 
         init: function (parent, state, params) {
             this._super.apply(this, arguments);
             this.noContentHelp = params.noContentHelp;
-            this.actionsDescr = {};
+            this._getLayout();
+            this.actionsDescr = {}; 
             this._boardSubcontrollers = []; // for board: controllers of subviews
             this._boardFormViewIDs = {}; // for board: mapping subview controller to form view id
+            this.menuData = [];
+            this.structedMenu = [];  //结构化图标
         },
 
+
+        willStart: function() {
+            var self = this;
+            return this._super.apply(this,arguments).then(function(){
+                return self._rpc({
+                        model:'ir.ui.menu',
+                        method: 'load_favourite_menu',
+                        args:[]
+                    }).then(function(result){
+                        // for(var i=0;i<result.length;i++){
+                        //     var menu = result[i];
+                        //     if(menu.web_icon){
+                        //         menu.web_icon = '/'+ menu.web_icon.replace(',','/');
+                        //     }else{
+                        //         menu.web_icon = '/odoo_complex_board/static/src/img/defaultview2.png';
+                        //     }
+                        // }
+                        self.menuData= result;                                
+                        self.structedMenu = self.structedMenu || [];
+                        result.forEach((item, index) => {
+                            const col = Math.floor(index / 5);   //每列5个菜单图标
+                            if (!self.structedMenu[col]) { 
+                                self.structedMenu[col] = [];
+                            }
+                            self.structedMenu[col].push(item);
+                          });
+                    })
+                }
+            )
+        },
+
+        
+
         on_attach_callback: function () {
+            var self = this;
             _.each(this._boardSubcontrollers, function (controller) {
                 if ('on_attach_callback' in controller) {
                     controller.on_attach_callback();
-                }
+                };
             });
+            //info: init bottom bar view  auth:wangjuan date:2019/11/25
+            _.each(this.actionsDescr, function (action) {
+                self.trigger_up('add_complex_view', {
+                    'viewInfo': {
+                        'name':action['string'],
+                        'id': action['id'],
+                        'actionId':action['name'],
+                        'menuId':action['menu_id'], 
+                        'icon':action['web_icon'],
+                        'stay': false
+                    }
+                })
+            })
         },
 
         on_detach_callback: function () {
@@ -53,23 +113,41 @@ odoo.define('complex.ComplexRenderer', function (require) {
                 }
             });
         },
-        
+
+         //info: get layout auth:wangjuan update:2019/11/27
+        _getLayout: function () {
+            this._rpc({
+                model: 'res.users',
+                method: 'get_layout',
+            }).then( function (result) {
+                layout = result
+            })
+        },
+
+        //info: check layout param  auth:wangjuan update:2019/11/27
         _renderTagComplex: function (node) {
             var self = this;
-            this.$el.addClass('o_complexboard');
+            this.$el.addClass('oe_complexboard_container');
             this.trigger_up('enable_cmplexboard');
+           
             var hasAction = _.detect(node.children, function (column) {
                 return _.detect(column.children,function (element){
                     return element.tag === "action"? element: false;
                 });
             });
-            if (!hasAction) {
-                return $(QWeb.render('Complex.NoContent'));
-            }
+            
+            // if(self.menuData.length){
+            //     return $(QWeb.render('Container.MenuIcon',{menuData: self.structedMenu}));
+            // }
+            // if (!hasAction) {
+            //     return $(QWeb.render('Complex.NoContent'));
+            // }
             node = $.extend(true, {}, node);
-            if (!('layout' in node.attrs)) {
-                node.attrs.layout = node.attrs.style;
-            }
+            node.attrs.layout = layout;
+            // if (!('layout' in node.attrs)) {
+            //     node.attrs.layout = layout;
+            // }
+
             for (var i = node.children.length; i < 3; i++) {
                 node.children.push({
                     tag: 'column',
@@ -83,8 +161,28 @@ odoo.define('complex.ComplexRenderer', function (require) {
                     self.actionsDescr[action.attrs.id] = action.attrs;
                 });
             });
-            var $html = $('<div>').append($(QWeb.render('Complex', {node: node, isMobile: config.device.isMobile})));
+
+            var $html = $('<div class="row">').append($(QWeb.render('Complex', {node: node, menuData:self.menuData, isMobile: config.device.isMobile})));
+          
+            // var $html = $('<div>').append($(QWeb.render('HomePage')));
+            
+            // if(self.menuData.length){
+            //     let self = this;
+            //     self._rpc({
+            //         model:'res.users',
+            //         method:'get_layout',
+            //         args:[]
+            //     }).then(function(result){
+            //         if(result === 'icon'){
+            //             $html.find('.o_left_container').append($(QWeb.render('Container.MenuIcon',{menuData: self.structedMenu})));
+            //         }
+            //     })
+            // }
+
+            // console.log('node', node);
+            // $html.find('.o_right_container').append($(QWeb.render('Complex',{node:node,isMobile: config.device.isMobile})))
             _.each(this.actionsDescr, function (action) {
+               
                 self.defs.push(self._createController({
                     $node: $html.find('.oe_action[data-id=' + action.id + '] .oe_complex_content'),
                     actionID: _.str.toNumber(action.name),
@@ -92,6 +190,7 @@ odoo.define('complex.ComplexRenderer', function (require) {
                     domain: Domain.prototype.stringToArray(action.domain, {}),
                     viewType: action.view_mode,
                 }));
+                
             });
             $html.find('.oe_complexboard_column').sortable({
                 connectWith: '.oe_complexboard_column',
@@ -182,94 +281,100 @@ odoo.define('complex.ComplexRenderer', function (require) {
             return board;
         },
 
-        // 最小化视图
+        //info: click minimize button  auth:wangjuan update:2019/11/26
         _onFoldClick: function (event) {
             var self = this;
-            console.log('this', self)
             var $e = $(event.currentTarget);
             console.log('$e', $e)
             var $action = $e.closest('.oe_action');
             var id = $action.data('id');
             var actionAttrs = this.actionsDescr[id];
-            if ($e.is('.oe_minimize')) {
-                actionAttrs.fold = '1';
-            } else {
-                delete(actionAttrs.fold);
-            }
-            $e.toggleClass('oe_minimize oe_maximize');
-            $action.find('.oe_complex_content').toggle();
-            this.trigger_up('save_dashboard');
+            console.log('event.currentTarget.attributes',event.currentTarget.attributes)
             this.trigger_up('add_complex_view', {
                 'viewInfo': {
                     'name':event.currentTarget.attributes['viewname'].nodeValue,
-                    'id': event.currentTarget.attributes['viewid'].nodeValue
+                    'id': event.currentTarget.attributes['viewid'].nodeValue,
+                    'actionId':event.currentTarget.attributes['viewaction'].nodeValue,
+                    'menuId':event.currentTarget.attributes['viewmenu'].nodeValue,
+                    'icon':event.currentTarget.attributes['viewicon'].nodeValue,
+                    'stay': true
                 }
             })
+            $action.toggle(false);
+            this.trigger_up('save_dashboard');
         },
 
-        // 关闭视图
+        //info: click expand button  auth:wangjuan date:2019/11/25
+        _onExpandScreen: function (event) {
+            const actionId = event.currentTarget.attributes['viewaction'].nodeValue;
+            var self = this;    
+            var $container = $(event.currentTarget).parents('.oe_action:first');
+            $container.remove();
+            
+            self.trigger_up('remove_complex_view', {
+                'viewInfo': {
+                    'name':event.currentTarget.attributes['viewname'].nodeValue,
+                    'id': event.currentTarget.attributes['viewid'].nodeValue,
+                    'actionId':event.currentTarget.attributes['viewaction'].nodeValue,
+                    'menuId':event.currentTarget.attributes['viewmenu'].nodeValue,
+                    'icon':event.currentTarget.attributes['viewicon'].nodeValue,
+                }
+            })
+            self.trigger_up('save_dashboard');
+            self.trigger_up('menu_clicked', {
+                // id: 227,  // todo get menuid
+                action_id: actionId,
+            });
+        },
+        
+        //info: click close button  auth:wangjuan update:2019/11/26
         _onCloseClick: function (event) {
             var self = this;
             var $container = $(event.currentTarget).parents('.oe_action:first');
             Dialog.confirm(this, (_t("确定要删除吗？")), {
                 confirm_callback: function () {
                     $container.remove();
-                    self.trigger_up('save_dashboard');
-                    
-                    this.trigger_up('remove_complex_view', {
+                    self.trigger_up('remove_complex_view', {
                         'viewInfo': {
                             'name':event.currentTarget.attributes['viewname'].nodeValue,
-                            'id': event.currentTarget.attributes['viewid'].nodeValue
+                            'id': event.currentTarget.attributes['viewid'].nodeValue,
+                            'actionId':event.currentTarget.attributes['viewaction'].nodeValue,
+                            'menuId':event.currentTarget.attributes['viewmenu'].nodeValue,
+                            'icon':event.currentTarget.attributes['viewicon'].nodeValue,
                         }
-                    })
+                    }),
+                    self.trigger_up('save_dashboard');
                 },
             });
         },
 
-        _onFullScreen: function (event) {
-            console.log('event', event);
-            var self = this;
-            var $container = $(event.currentTarget).parents('.oe_action:first');
-            console.log('$container', $container)
-            var element = $container[0].ownerDocument.documentElement;
-            if (element.requestFullscreen) {
-                element.requestFullscreen();
-            } else if (element.msRequestFullscreen) {
-                element.msRequestFullscreen();
-            } else if (element.mozRequestFullScreen) {
-                element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen) {
-                element.webkitRequestFullscreen();
-            }
-        },
 
-        _onExitFullScreen: function (event) {
-            var $container = $(event.currentTarget).parents('.oe_action:first');
-
-            var document = $container[0].ownerDocument;
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            }
-        },
-
+        //info: click maximize button  auth:wangjuan update:2019/11/26
         _onFullScreenTest: function (event) {
+            var self = this;    
             var $container = $(event.currentTarget).parents('.oe_action:first');
-            this.do_action({
-                type: 'ir.actions.client',
-                tag: 'fullScreenPage',
-                // name: 'test',
-                target: 'current'
-            }).then(function(){
-                $('.o_fullscreen_container').append($container)
+            $container.remove();
+            self.trigger_up('save_dashboard');
+            
+            this.trigger_up('remove_complex_view', {
+                'viewInfo': {
+                    'name':event.currentTarget.attributes['viewname'].nodeValue,
+                    'id': event.currentTarget.attributes['viewid'].nodeValue,
+                    'actionId':event.currentTarget.attributes['viewaction'].nodeValue,
+                    'menuId':event.currentTarget.attributes['viewmenu'].nodeValue,
+                    'icon':event.currentTarget.attributes['viewicon'].nodeValue,
+                }
             })
+
+            const actionId = event.currentTarget.attributes['viewaction'].nodeValue;
+            console.log(actionId);
+            this.trigger_up('menu_clicked', {
+                // id: 227,  // todo get menuid
+                action_id: actionId,
+            });
         },
 
+<<<<<<< HEAD
         // //设置
         //  _onBarSettingClick: function () {
         //     this.trigger_up('change_layout');
@@ -283,6 +388,51 @@ odoo.define('complex.ComplexRenderer', function (require) {
         //         target: 'current'
         //     })
         // },
+=======
+        //info: click bottom bar setting  auth:wangjuan date:2019/11/18
+         _onBarSettingClick: function () {
+            this.trigger_up('change_layout');
+        },
+
+        //info: click bottom bar menu  auth:wangjuan date:2019/11/18
+        _onBarMenuClick: function (event) {
+            // this.trigger_up('choose_menu');
+            this.do_action({
+                type: 'ir.actions.client',
+                tag: 'ComplexMenusPage',
+                target: 'current'
+            })
+        },
+>>>>>>> 3bfec937f74db0045e49acb3abfa35b98c4627f8
+
+        //info: click bottom bar view  auth:wangjuan date:2019/11/25
+        _onBarIconClick: function(event){
+            const viewId = event.currentTarget.attributes['viewId'].nodeValue;
+            $('#'+viewId).toggle();
+            // $('#'+viewId).children(".oe_complex_content").toggle();
+            // $('#'+viewId).children('.oe_header').toggle();
+            $(event.currentTarget).toggleClass('o_complex_bar_stay_icon_on');
+            this.trigger_up('save_dashboard');
+        },
+
+         //info: click bottom bar fold button  auth:wangjuan date:2019/11/26
+        _onBarFoldBtnClick: function(event) {
+            $('.o_complex_bar_icon_container').toggleClass('o_complex_bar_hidden');
+            $('.o_complex_bar_btn_container').toggleClass('o_complex_bar_unfold_btn');
+        },
+
+        
+        //点击图标跳转视图，changych 2019-11-25
+        _onMenuClicked: function(event){
+            const menu_id = event.currentTarget.attributes['menuid'].nodeValue;
+            const action_id = event.currentTarget.attributes['actionid'].nodeValue.split(',')[1];
+            if (action_id) {
+                this.trigger_up('menu_clicked',{
+                    id: menu_id,
+                    action_id: action_id,
+                });
+            }
+        },
 
     })
 

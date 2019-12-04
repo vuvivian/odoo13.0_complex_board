@@ -58,20 +58,12 @@ class Menu(models.Model):
             menu_item.setdefault("children", []).sort(key=operator.itemgetter("sequence"))
         
         #judge the menus is collected or not
-        # for menu_item in menu_items:
-        #     if self.env.uid in menu_item["collect_user_ids"].ids:
-        #         menu_item.setdefault("is_collected", True)
-        #     else:
-        #         menu_item.setdefault("is_collected", False) 
-        count = 0
-        for menu_item in menu_items:
-            if count % 2 == 0:
+        for menu_item in menu_items:         
+            if self.env.uid in self.browse(menu_item["id"]).collect_user_ids.ids:
                 menu_item.setdefault("is_collected", True)
             else:
-                menu_item.setdefault("is_collected", False)
-            count += 1
-
-        
+                menu_item.setdefault("is_collected", False) 
+ 
         return {
             "id": root_menu[0]["id"],
             "name": root_menu[0]["name"],
@@ -88,8 +80,13 @@ class Menu(models.Model):
         """
         fields = ["name", "sequence", "parent_id", "action", "web_icon"]
         self.env.cr.execute("select menu_id from menu_user_rel where user_id=%s" %(self.env.uid))
-        menu_ids = self.env.cr.fetchall()
+        menu_ids = [menu_id for item in self.env.cr.fetchall() for menu_id in item]
         favourite_menus = self.browse(menu_ids).read(fields)
+        for menu in favourite_menus:
+            if menu['web_icon']:
+                menu['web_icon'] = "/"+ menu['web_icon'].replace(',','/')
+            else:
+                menu['web_icon'] = '/odoo_complex_board/static/src/img/defaultview2.png'
         return favourite_menus
     
     @api.model
@@ -97,13 +94,23 @@ class Menu(models.Model):
         """ collect the given menu.
         """
         menu = self.browse(menu_id)
-        menu.write({'collect_user_ids':(4,self.env.uid)})
+        menu.write({'collect_user_ids':[(4,self.env.uid)]})
     
     @api.model
     def uncollect(self,menu_id):
         """ 
         uncollect the given menu.
         """
-        menu = self.browse(menu_id)
-        menu.write({'collect_user_ids':(3,self.env.uid)})
+        #由于未知原因，不能删除中间表关联记录，暂时通过操作中间表实现
+        # menu = self.browse(menu_id)
+        # menu.write({'collect_user_ids':[(3,self.env.uid)]})
+        self.env.cr.execute("delete from menu_user_rel where menu_id=%s and user_id =%s" %(menu_id,self.env.user.id))
 
+    @api.model
+    def load_homepage(self, actionId):
+        record = self.env['ir.model.data'].xmlid_to_object('odoo_complex_board.complex_view_root_menu')
+        action = "ir.actions.act_window,"+str(actionId)
+        menu_id = self.env['ir.ui.menu'].search([('action', '=', action)]).id
+        web_icon = self.env['ir.ui.menu'].search([('id', '=', menu_id)]).web_icon
+        return [record.id,record.action.id,menu_id, web_icon]
+    

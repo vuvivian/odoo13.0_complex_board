@@ -22,7 +22,9 @@ odoo.define('complex.AddToComplexMenu', function(require, factory) {
     var AddToComplexMenu = Widget.extend({
         events: _.extend({}, Widget.prototype.events,{
             'click .o_add_to_complex.o_menu_header':'_onMenuHeaderClick',
-            'click .o_add_to_complex_confirm_button': '_onAddToComplexConfirmButtonClick'
+            'click .o_add_to_complex_confirm_button': '_onAddToComplexConfirmButtonClick',
+            'click .o_add_to_complex_input': '_onAddToComplexInputClick',
+            'keyup .o_add_to_complex_input': '_onKeyUp',
         }),
 
         init: function(parent, params) {
@@ -135,6 +137,27 @@ odoo.define('complex.AddToComplexMenu', function(require, factory) {
                 }
             });
 
+        },
+
+        /**
+         * @private
+         * @override
+         * @param {jQueryEvent} event
+         */
+        _onKeyUp: function (event) {
+            if (event.which === $.ui.keyCode.ENTER) {
+                this._addToBoard();
+            }
+        },
+
+        /**
+         * @private
+         * @param {jQueryEvent} event
+         */
+        _onAddToComplexInputClick: function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            this.$input.focus();
         },
 
         closeMenu: function () {

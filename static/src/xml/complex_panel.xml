@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="ControlPanel">
+        <t t-jquery=".o_cp_searchview" t-operation="replace">
+            <div t-attr-data-id="action.attrs.id" class="o_cp_panel_size">
+                <span class="oe_complex_minimize" alt="最小化">
+                    <img src='/odoo_complex_board/static/src/img/min.png' style="width: 18px; height: 18px"/>
+                </span>
+                <span>&amp;nbsp;</span>
+                <span class="oe_complex_maximize" alt="缩放">
+                    <img src='/odoo_complex_board/static/src/img/suoxiao.png' style="width: 18px; height: 18px"/>
+                </span>
+                <span>&amp;nbsp;</span>
+                <span class="oe_complex_close" alt="关闭">
+                    <img src='/odoo_complex_board/static/src/img/close.png' style="width: 20px; height: 20px"/>
+                </span>
+            </div>
+        </t>
+    </t>
+</templates>

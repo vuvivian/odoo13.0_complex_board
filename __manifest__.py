@@ -11,10 +11,10 @@
     'version': '1.0',
     'depends': ['base','web',],
     'data': [
-        'security/ir.model.access.csv',
         'views/complex_menu.xml',
         'views/complex_template.xml',
     ],
+<<<<<<< HEAD
     'qweb': [
         'static/src/xml/complex_board.xml',
         'static/src/xml/menu_list.xml',
@@ -24,6 +24,9 @@
         'static/src/xml/bottom_bar.xml',
         'static/src/xml/complex_footer.xml',
     ],
+=======
+    'qweb': ["static/src/xml/*.xml"],
+>>>>>>> 3bfec937f74db0045e49acb3abfa35b98c4627f8
     'installable': True,
     'application': True,
     'auto_install': False,

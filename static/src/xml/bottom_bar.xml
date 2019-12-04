@@ -6,26 +6,47 @@
   -->
   <template>
     <t t-name="ComplexBoard.BottomBar">
-        <div class="o_complex_bar">
-            <span class="o_complex_bar_icon o_complex_bar_setting">
-                <img src="/complex_board/static/src/img/setting.png" width="30" height="30" alt="setting"/>
-            </span>
-            <span class="o_complex_bar_icon o_complex_bar_menu">
-                <img src="/complex_board/static/src/img/menu.png" width="36" height="36" alt="menu"/>
-            </span>
-            <span class="o_complex_bar_icon">
-                |
-            </span>
+         <div class="o_complex_bar ">
+           <div class="o_complex_bar_icon_container">
+                 <span class="o_complex_bar_icon o_complex_bar_setting">
+                    <img src="/odoo_complex_board/static/src/img/setting.png" width="30" height="30" alt="setting"/>
+                </span>
+                <span class="o_complex_bar_icon o_complex_bar_menu">
+                    <img src="/odoo_complex_board/static/src/img/menu.png" width="36" height="36" alt="menu"/>
+                </span>
+                <span class="o_complex_bar_icon">
+                    |
+                </span>
                 <t t-if="allView">
-                <t t-log="allView" />
-                <t t-foreach="allView['stay_view']" t-as="viewItem">
-                    <t t-log="viewItem" />
-                        <span class="o_complex_bar_icon">
-                        <t t-esc="viewItem.name"/>
-                    </span>
+                    <t t-foreach="allView['stay_view']" t-as="viewItem">
+                        <t t-if="viewItem['stay']">
+                            <span class="o_complex_bar_icon o_complex_bar_stay_icon o_complex_bar_stay_icon_on" t-attr-viewId="{{viewItem['id']}}" t-attr-id="o_bottom_bar_staty_icon{{viewItem['id']}}">
+                                <t t-if="viewItem['icon']='false'">
+                                    <img src="/odoo_complex_board/static/src/img/defaultview.png" width="36" height="36" alt="menu"/>
+                                </t>
+                                 <t t-else="">
+                                    <img t-attr-src="{{viewItem['icon']}}" width="36" height="36" alt="menu"/>
+                                 </t>
+                            </span>
+                        </t>
+                        <t t-if="!viewItem['stay']">
+                            <span class="o_complex_bar_icon o_complex_bar_stay_icon " t-attr-viewId="{{viewItem['id']}}" t-attr-id="o_bottom_bar_staty_icon{{viewItem['id']}}">
+                                <t t-if="viewItem['icon']='false'">
+                                    <img src="/odoo_complex_board/static/src/img/defaultview.png" width="36" height="36" alt="menu"/>
+                                </t>
+                                 <t t-else="">
+                                    <img t-attr-src="{{viewItem['icon']}}" width="36" height="36" alt="menu"/>
+                                 </t>
+                            </span>
+                        </t>
+                    </t>
                 </t>
-            </t>
+           </div>
+            <div class="o_complex_bar_btn_container" />
         </div>
     </t>
   </template>
+<<<<<<< HEAD
   
+=======
+>>>>>>> 3bfec937f74db0045e49acb3abfa35b98c4627f8

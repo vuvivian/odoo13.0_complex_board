@@ -12,19 +12,19 @@
                     <div class="col-sm-6 col-md-4"  >
                         <div class="thumbnail">
                             <p>
-                                <input name="Layout_icon" type="radio" value="1" />
+                                <input name="Layout_icon" type="radio" data-layout="icon" class="layout_01" checked="true"/>
                                 <span class="o_layout_text">应用以图标展示</span>
                             </p>
-                            <img src="/board/static/src/img/layout_1-1-1.png" alt="..." />
+                            <img src="/odoo_complex_board/static/src/img/layout_1-1-1.png" alt="..." />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
                             <p>
-                                <input name="Layout_detail" type="radio" value="2" />
+                                <input name="Layout_icon" type="radio" data-layout="view" class="layout_01"/>
                                 <span class="o_layout_text">显示应用的详情页展示</span>
                             </p>
-                            <img src="/board/static/src/img/layout_1-1-1.png" alt="..." />
+                            <img src="/odoo_complex_board/static/src/img/layout_1-1-2.png" alt="..." />
                         </div>
                     </div>
                 </div>

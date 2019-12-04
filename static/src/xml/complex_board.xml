@@ -6,7 +6,7 @@
   -->
 <template>
      <t t-name="Complex.NoContent">
-        <p> hello, 这里一无所有😯😯😯 </p>
+        <p> hello, 这里一无所有��� </p>
         <t t-call="ComplexBoard.BottomBar"/>
      </t>
      
@@ -20,16 +20,43 @@
         </form>
     </t>
 
-    <t t-name="Complex">
-        <table t-att-data-layout="node.attrs.layout" t-attf-class="oe_complexboard oe_complexboard_layout_#{node.attrs.layout}" cellspacing="0" cellpadding="0" border="0">
-            <tr>
-                <td t-foreach="node.children" t-as="column" t-if="column.tag == 'column'"
-                    t-att-id="'column_' + column_index" t-attf-class="oe_complexboard_column index_#{column_index}">
-                    <t t-foreach="column.children" t-as="action" t-if="action.tag == 'action'" t-call="ComplexBoard.action"/>
-                </td>
-            </tr>
-        </table>
-         <t t-call="ComplexBoard.BottomBar"/>
+    <t t-name="Complex">  
+        <t t-if="node.attrs.layout=='icon' ">
+            <t t-call="ComplexBoard.IconBar" />
+            <table t-att-data-layout="node.attrs.layout" t-attf-class="oe_complexboard oe_complexboard_layout_#{node.attrs.layout} col-10" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                    <td t-foreach="node.children" t-as="column" t-if="column.tag == 'column'"
+                        t-att-id="'column_' + column_index" t-attf-class="oe_complexboard_column index_#{column_index}">
+                        <t t-foreach="column.children" t-as="action" t-if="action.tag == 'action'" t-call="ComplexBoard.action"/>
+                    </td>
+                </tr>
+            </table>
+        </t>
+        <t t-else="">
+            <table t-att-data-layout="node.attrs.layout" t-attf-class="oe_complexboard oe_complexboard_layout_#{node.attrs.layout}" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                    <td t-foreach="node.children" t-as="column" t-if="column.tag == 'column'"
+                        t-att-id="'column_' + column_index" t-attf-class="oe_complexboard_column index_#{column_index}">
+                        <t t-foreach="column.children" t-as="action" t-if="action.tag == 'action'" t-call="ComplexBoard.action"/>
+                    </td>
+                </tr>
+            </table>
+        </t>
+        <t t-call="ComplexBoard.BottomBar"/>
+    </t>
+
+     <t t-name="ComplexBoard.IconBar">
+        <div class="col-2 oe_complex_icon_container">
+            <t t-log="menuData" />
+            <ul class="list-group list-group-flush oe_complex_icon_container_ul">
+                <li class="list-group-item oe_complex_icon_item " t-foreach="menuData" t-as="menunItem" t-attr-menuid="{{menunItem.id}}" t-attr-actionid="{{menunItem.action}}">
+                    <div t-attr-menuid="{{menunItem.id}}" t-attr-actionid="{{menunItem.action}}"> 
+                        <img t-attr-src="{{menunItem.web_icon}}" width="70"  height="70" style="border-radius: 15px;margin-bottom:5px;"/>
+                        <div class="oe_menuitem_name"><t t-esc="menunItem.name"/></div>
+                    </div>
+                </li>  
+            </ul>
+        </div>
     </t>
 
     <div t-name="AddToComplexMenu">
@@ -42,5 +69,22 @@
         </div>
     </div>
 
+    <!-- <t t-name="Container.MenuIcon">
+        <div t-if="menuData.length" class="o_menu_container" style="width:auto; display:inline-block !important; display:inline;">
+            <ul t-foreach="menuData" t-as="menu_col" class="menu_col" style="float:left">
+                <li t-foreach="menu_col" t-as="menu" style="list-style:none">
+                    <div class="o_menu" t-attr-menu="{{menu.id}}" t-attr-action="{{menu.action}}" style="margin-bottom:10px">
+                        <div class="o_menu_icon"><img t-attr-src="{{menu.web_icon}}" width="70"  height="70" style="border-radius: 15px;margin-bottom:5px;"/></div>
+                        <div class="o_menu_name"><center><t t-esc="menu.name"/></center></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </t> -->
+    <!-- <t t-name="HomePage">
+        <div class="o_left_container" style="width:auto; display:inline-block !important; display:inline;"></div>
+        <div class="o_right_container"></div>
+        <t t-call="ComplexBoard.BottomBar"/>
+    </t> -->
 
 </template>
