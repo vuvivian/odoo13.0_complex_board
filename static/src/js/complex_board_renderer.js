@@ -26,8 +26,8 @@ odoo.define('complex.ComplexRenderer', function (require) {
             'click .oe_complexboard_column .oe_fullScreen': '_onFullScreen',
             'click .oe_complexboard_column .oe_exitFullScreen': '_onExitFullScreen',
             'click .oe_complexboard_column  .oe_fullScreenTest': '_onFullScreenTest',
-            'click .o_complex_bar_icon.o_complex_bar_setting': '_onBarSettingClick', 
-            'click .o_complex_bar_icon.o_complex_bar_menu': '_onBarMenuClick',
+            // 'click .o_complex_bar_icon.o_complex_bar_setting': '_onBarSettingClick', 
+            // 'click .o_complex_bar_icon.o_complex_bar_menu': '_onBarMenuClick',
         }),
 
         init: function (parent, state, params) {
@@ -270,19 +270,19 @@ odoo.define('complex.ComplexRenderer', function (require) {
             })
         },
 
-        //设置
-         _onBarSettingClick: function () {
-            this.trigger_up('change_layout');
-        },
-        //菜单
-        _onBarMenuClick: function (event) {
-            // this.trigger_up('choose_menu');
-            this.do_action({
-                type: 'ir.actions.client',
-                tag: 'ComplexMenusPage',
-                target: 'current'
-            })
-        },
+        // //设置
+        //  _onBarSettingClick: function () {
+        //     this.trigger_up('change_layout');
+        // },
+        // //菜单
+        // _onBarMenuClick: function (event) {
+        //     // this.trigger_up('choose_menu');
+        //     this.do_action({
+        //         type: 'ir.actions.client',
+        //         tag: 'ComplexMenusPage',
+        //         target: 'current'
+        //     })
+        // },
 
     })
 

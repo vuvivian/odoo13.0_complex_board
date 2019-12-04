@@ -22,6 +22,7 @@
         'static/src/xml/view_action.xml',
         'static/src/xml/enlarge_view.xml',
         'static/src/xml/bottom_bar.xml',
+        'static/src/xml/complex_footer.xml',
     ],
     'installable': True,
     'application': True,
